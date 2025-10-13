@@ -4,13 +4,14 @@ using System.Security.Cryptography;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class enemyScript : MonoBehaviour
+public class enemy_2_Script : MonoBehaviour
 {
     public float speed;
+    public int enemy_2_health = 3;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
@@ -28,16 +29,16 @@ public class enemyScript : MonoBehaviour
         {
             other.transform.GetComponent<playerScript>().TakeDamage();
             Debug.Log("hit:" + other);
-         
+
         }
-        if (other.tag == "laserBullet")
+        if (other.tag == "laserBullet" && enemy_2_health < 1)
         {
             Destroy(gameObject);
             GameObject.Find("enemySpawner").GetComponent<spawnScript>().enemyCounter -= 1;
         }
         //Om fiander träffas player den förstör sig.
         //if enemy hit the player it gets destroyed
-        if (other.tag == "Player")
+        if (other.tag == "Player" && enemy_2_health < 1)
         {
             Destroy(gameObject);
             GameObject.Find("enemySpawner").GetComponent<spawnScript>().enemyCounter -= 1;
