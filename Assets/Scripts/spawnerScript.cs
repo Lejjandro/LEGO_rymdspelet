@@ -8,7 +8,7 @@ public class spawnScript : MonoBehaviour
     public int enemyCounter;
     private GameObject player;
     public GameObject asteroider;
-    public GameObject enemy2;
+    public GameObject enemyShip2;
     public int asteroidercounter;
     private int spawnShip;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
