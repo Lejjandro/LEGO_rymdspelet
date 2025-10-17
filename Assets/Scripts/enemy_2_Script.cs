@@ -22,6 +22,12 @@ public class enemy_2_Script : MonoBehaviour
         {
             transform.position = new Vector3(Random.Range(-8, 8), 5.5f, 0);
         }
+        if (enemy_2_health < 1)
+        {
+            GameObject.Find("enemySpawner").GetComponent<spawnScript>().enemyCounter -= 1;
+            Destroy(gameObject);
+            
+        }
     }
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -31,17 +37,15 @@ public class enemy_2_Script : MonoBehaviour
             Debug.Log("hit:" + other);
 
         }
-        if (other.tag == "laserBullet" && enemy_2_health < 1)
+        if (other.tag == "laserBullet")
         {
-            Destroy(gameObject);
-            GameObject.Find("enemySpawner").GetComponent<spawnScript>().enemyCounter -= 1;
+            enemy_2_health -= 1;
         }
         //Om fiander träffas player den förstör sig.
         //if enemy hit the player it gets destroyed
-        if (other.tag == "Player" && enemy_2_health < 1)
+        if (other.tag == "Player")
         {
-            Destroy(gameObject);
-            GameObject.Find("enemySpawner").GetComponent<spawnScript>().enemyCounter -= 1;
+            enemy_2_health -= 1;
         }
     }
 }

@@ -11,6 +11,7 @@ public class playerScript : MonoBehaviour
     //Player bullet colldown
     private int counter = 0;
     private bool canShoot = true;
+    private Vector3 move = new Vector3(0,0,0);
     //Player heath
     private int playerHealth = 3;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -24,15 +25,47 @@ public class playerScript : MonoBehaviour
     {
         counter++;
         //player movement
-        if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
-        {
-            transform.Translate(Vector3.left * playerSpeed * Time.deltaTime);
-        }
-
+        //!!!!!!PROBLEM OM JAG TRYCKER 2 KEY SAMTID DEN STANNAR INTE!!!!!!!
         if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
         {
-            transform.Translate(Vector3.right * playerSpeed * Time.deltaTime);
+            move += Vector3.right;
         }
+        if (Input.GetKeyUp(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
+        {
+            move -= Vector3.right;
+        }
+
+        if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
+        {
+            move += Vector3.left;
+        }
+        if (Input.GetKeyUp(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
+        {
+            move -= Vector3.left;
+        }
+
+        if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))
+        {
+            move += Vector3.up;
+        }
+        if (Input.GetKeyUp(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))
+        {
+            move -= Vector3.up;
+        }
+
+        if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))
+        {
+            move += Vector3.down;
+        }
+        if (Input.GetKeyUp(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))
+        {
+            move -= Vector3.down;
+        }
+        Debug.Log(move);
+        move = move.normalized;
+
+        
+        transform.Translate(move * playerSpeed *  Time.deltaTime);
 
         //player laser
         if (Input.GetKeyDown(KeyCode.Space) && canShoot == true)
@@ -53,11 +86,8 @@ public class playerScript : MonoBehaviour
     {
         //player health
         playerHealth--;
+        GameObject.Find("Player").GetComponent<playerLifes>().life -= 1;
         Debug.Log("player Health:" + playerHealth);
-        if (playerHealth < 1)
-        {
-            Destroy(gameObject);
-        }
     }
 
 
