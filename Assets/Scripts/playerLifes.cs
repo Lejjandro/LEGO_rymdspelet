@@ -8,6 +8,8 @@ public class playerLifes : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // Check player life and destroy life icons accordingly
+        // Kolla spelarens liv och förstör livs ikoner därefter
         if (life < 1)
         {
             Destroy(Lifes[0].gameObject);
@@ -22,8 +24,10 @@ public class playerLifes : MonoBehaviour
             Destroy(Lifes[2].gameObject);
         }
     }
-    public void TakeDamage(int d)
+    public void TakeDamage(int damage)
     {
-        life -= d;
+        // Reduce player life by damage
+        // Minska spelarens liv med damage
+        life -= damage;
     }
 }

@@ -4,74 +4,88 @@ using UnityEngine.InputSystem.Android;
 
 public class playerScript : MonoBehaviour
 {
-    //Player speed
+    // Player speed
     public float playerSpeed = 1f;
-    //Player bullet
+    
+    // Player bullet
     public GameObject laserBullet;
-    //Player bullet colldown
+    
+    // Player bullet colldown
     private int counter = 0;
     private bool canShoot = true;
+
+    // Player movement
     private Vector3 move = new Vector3(0,0,0);
-    //Player heath
-    private int playerHealth = 3;
+
+    // Player sprites
+    private SpriteRenderer spriteRenderer;
+    public Sprite player;
+    public Sprite playerRigth;
+    public Sprite playerLeft;
+    public Sprite playerDamage;
+
+    // Player Health
+    public int playerHealth = 3;
+    
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        transform.position = new Vector3(0f, -4f, 0); 
+        transform.position = new Vector3(0f, -4f, 0);
+        spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     // Update is called once per frame
     void Update()
     {
         counter++;
-        //player movement
-        //!!!!!!PROBLEM OM JAG TRYCKER 2 KEY SAMTID DEN STANNAR INTE!!!!!!!
+        // Player movement
+        // Player rörelse
+        // !!!!chat GPT har fixat detta vissa till lärare!!!!
+        float moveX = 0f;
+        float moveY = 0f;
+
         if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
         {
-            move += Vector3.right;
+            moveX = 1f;
         }
-        if (Input.GetKeyUp(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
+        else if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
         {
-            move -= Vector3.right;
+            moveX = -1f;
         }
-
-        if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
-        {
-            move += Vector3.left;
-        }
-        if (Input.GetKeyUp(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
-        {
-            move -= Vector3.left;
-        }
-
         if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))
         {
-            move += Vector3.up;
+            moveY = 1f;
         }
-        if (Input.GetKeyUp(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))
+        else if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))
         {
-            move -= Vector3.up;
+            moveY = -1f;
+        }
+        Vector3 move = new Vector3(moveX, moveY, 0f).normalized;
+
+        transform.Translate(move * playerSpeed * Time.deltaTime);
+
+        // Player sprites change based on movement direction
+        // Spelar sprites ändras baserat på rörelseriktning
+        if (moveX < 0) { 
+            spriteRenderer.sprite = playerLeft;
+        }
+        else if (moveX > 0) {
+            spriteRenderer.sprite = playerRigth;
+        }
+        else {
+            spriteRenderer.sprite = player;
         }
 
-        if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))
-        {
-            move += Vector3.down;
-        }
-        if (Input.GetKeyUp(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))
-        {
-            move -= Vector3.down;
-        }
-        Debug.Log(move);
-        move = move.normalized;
-
-        
-        transform.Translate(move * playerSpeed *  Time.deltaTime);
-
-        //player laser
+        // Player laser
+        // Spelare laser
         if (Input.GetKeyDown(KeyCode.Space) && canShoot == true)
         {
+            // Instantiate laser bullet
+            // Instansiera laser bullet
             Instantiate(laserBullet, this.transform.position + new Vector3(0,0.7f,0), this.transform.rotation);
-            //Player bullet colldown
+
+            // Player bullet colldown
+            // Spelar bullet colldown
             canShoot = false;
             counter = 0;
         }
@@ -84,7 +98,8 @@ public class playerScript : MonoBehaviour
     }
     public void TakeDamage()
     {
-        //player health
+        // Player health
+        // Spelar hälsa
         playerHealth--;
         GameObject.Find("Player").GetComponent<playerLifes>().life -= 1;
         Debug.Log("player Health:" + playerHealth);

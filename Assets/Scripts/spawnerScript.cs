@@ -4,16 +4,27 @@ using UnityEngine;
 
 public class spawnScript : MonoBehaviour
 {
+    // Enemy spawning
+    // Fiende spawnning
     public GameObject enemyShip;
     public int enemyCounter;
     public GameObject enemyShip2;
+    private GameObject spawnShip;
+
+    // Reference to the player object
+    // Referens till spelaren objekt
     private GameObject player;
+    
+    // Asteroid spawning
+    // Asteroid spawnning
     public GameObject asteroider;
     public int asteroidercounter;
-    private GameObject spawnShip;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        // Starting the coroutines for spawning enemies and asteroids
+        // Startar korutiner för att spawna fiender och asteroider
         StartCoroutine(enemyspawner());
         StartCoroutine(asteroiderspawner());
     }
@@ -25,10 +36,14 @@ public class spawnScript : MonoBehaviour
     }
     IEnumerator enemyspawner()
     {
+        // Spawning enemies
+        // Spawnar fiender
         while (true)
         {
             if (enemyCounter < 3 && GameObject.Find("Player") != null)
             {
+                // Randomly spawns either enemyShip or enemyShip2
+                // Slumpar fram antingen enemyShip eller enemyShip2
                 int rull;
                 rull = Random.Range(0, 2);
                 if (rull == 0)
@@ -50,6 +65,8 @@ public class spawnScript : MonoBehaviour
     }
     IEnumerator asteroiderspawner()
     {
+        // Spawning asteroids
+        // Spawnar asteroider
         while (true)
         {
             if (asteroidercounter < 0 && GameObject.Find("Player") != null)
