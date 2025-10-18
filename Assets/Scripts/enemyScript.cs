@@ -41,7 +41,7 @@ public class enemyScript : MonoBehaviour
         {
             scoreManager.instance.AddPoits(10);
             Destroy(gameObject);
-            GameObject.Find("enemySpawner").GetComponent<spawnScript>().enemyCounter -= 1;
+            GameObject.Find("EnemySpawner").GetComponent<spawnScript>().enemyCounter -= 1;
         }
 
         // If enemy hit the player it gets destroyed.
@@ -49,7 +49,7 @@ public class enemyScript : MonoBehaviour
         if (other.tag == "Player")
         {
             Destroy(gameObject);
-            GameObject.Find("enemySpawner").GetComponent<spawnScript>().enemyCounter -= 1;
+            GameObject.Find("EnemySpawner").GetComponent<spawnScript>().enemyCounter -= 1;
         }
     }
 }

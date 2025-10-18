@@ -9,16 +9,23 @@ public class scoreManager : MonoBehaviour
     // Singleton instance
     // Singleton instans
     public static scoreManager instance;
+
     // UI elements for score and highscore
     // UI element för poäng och highscore
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI highscoreText;
     
+    // Current score and highscore values
+    // Nuvarande poäng och highscore värden
     int score = 0;
-    int highscore = 0;
-
+    int highScore = 0;
+    
+    // Time required to hold R to reset highscore
+    // Tid som krävs för att hålla in R för att återställa highscore
     private float resetHoldTimer = 3f;
-    private float resettimer = 0f;
+    private float resetTimer = 0f;
+
+    private bool doublePoints;
 
     private void Awake()
     {
@@ -28,11 +35,13 @@ public class scoreManager : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        doublePoints = false;
+
         // Load highscore from PlayerPrefs
         // Ladda highscore från PlayerPrefs
-        highscore = PlayerPrefs.GetInt("highscore", 0);
+        highScore = PlayerPrefs.GetInt("highscore", 0);
         scoreText.text = "SCORE: " + score.ToString();
-        highscoreText.text = "HIGHSCORE: " + highscore.ToString();
+        highscoreText.text = "HIGHSCORE: " + highScore.ToString();
     }
 
     void Update()
@@ -41,11 +50,11 @@ public class scoreManager : MonoBehaviour
         // Återställ highscore om R hålls intryckt i resetHoldTimer sekunder
         if (Input.GetKey(KeyCode.R))
         {
-            resettimer += Time.deltaTime;
-            if (resettimer >= resetHoldTimer)
+            resetTimer += Time.deltaTime;
+            if (resetTimer >= resetHoldTimer)
             {
                 ResetHighsocre();
-                resettimer = 0f;
+                resetTimer = 0f;
             }
         }
     }
@@ -59,7 +68,7 @@ public class scoreManager : MonoBehaviour
 
         // Check and update highscore
         // Kontrollera och uppdatera highscore
-        if (highscore < score)
+        if (highScore < score)
         {
             PlayerPrefs.SetInt("highscore", score);
         }
@@ -69,8 +78,8 @@ public class scoreManager : MonoBehaviour
     // Återställ highscore till 0
     public void ResetHighsocre()
     {
-        highscore = 0;
+        highScore = 0;
         PlayerPrefs.SetInt("highscore", 0);
-        highscoreText.text = "HIGHSCORE: " + highscore.ToString();
+        highscoreText.text = "HIGHSCORE: " + highScore.ToString();
     }
 }

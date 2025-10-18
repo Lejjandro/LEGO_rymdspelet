@@ -40,12 +40,13 @@ public class asteroiderScript : MonoBehaviour
         if (other.tag == "Player")
         {
             Destroy(gameObject);
-            GameObject.Find("enemySpawner").GetComponent<spawnScript>().enemyCounter -= 1;
+            GameObject.Find("EnemySpawner").GetComponent<spawnScript>().enemyCounter -= 1;
         }
         if (other.tag == "laserBullet")
         {
+            scoreManager.instance.AddPoits(5);
             Destroy(gameObject);
-            GameObject.Find("enemySpawner").GetComponent<spawnScript>().enemyCounter -= 1;
+            GameObject.Find("EnemySpawner").GetComponent<spawnScript>().enemyCounter -= 1;
         }
     }
 }

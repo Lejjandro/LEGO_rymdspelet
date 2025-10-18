@@ -29,7 +29,7 @@ public class enemy_2_Script : MonoBehaviour
         // Om fiende hälsa är mindre än 1 förstörs den och spelaren får poäng.
         if (enemy_2_health < 1)
         {
-            GameObject.Find("enemySpawner").GetComponent<spawnScript>().enemyCounter -= 1;
+            GameObject.Find("EnemySpawner").GetComponent<spawnScript>().enemyCounter -= 1;
             scoreManager.instance.AddPoits(50);
             Destroy(gameObject);
         }

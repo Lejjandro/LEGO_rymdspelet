@@ -69,7 +69,7 @@ public class spawnScript : MonoBehaviour
         // Spawnar asteroider
         while (true)
         {
-            if (asteroidercounter < 0 && GameObject.Find("Player") != null)
+            if (asteroidercounter < 1 && GameObject.Find("Player") != null)
             {
                 Instantiate(asteroider, new Vector3(Random.Range(-8, 8), 7, 0), Quaternion.identity);
                 asteroidercounter++;

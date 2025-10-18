@@ -5,7 +5,7 @@ using UnityEngine.InputSystem.Android;
 public class playerScript : MonoBehaviour
 {
     // Player speed
-    public float playerSpeed = 1f;
+    public float playerSpeed = 5f;
     
     // Player bullet
     public GameObject laserBullet;
@@ -23,13 +23,19 @@ public class playerScript : MonoBehaviour
     public Sprite playerRigth;
     public Sprite playerLeft;
     public Sprite playerDamage;
+    public Sprite playerDamage2;
 
     // Player Health
     public int playerHealth = 3;
+
+    GameObject shield;
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        shield = transform.Find("Shield").gameObject;
+        DeactivateShild();
+
         transform.position = new Vector3(0f, -4f, 0);
         spriteRenderer = GetComponent<SpriteRenderer>();
     }
@@ -66,14 +72,27 @@ public class playerScript : MonoBehaviour
 
         // Player sprites change based on movement direction
         // Spelar sprites ändras baserat på rörelseriktning
-        if (moveX < 0) { 
+        if (moveX < 0) 
+        { 
             spriteRenderer.sprite = playerLeft;
         }
-        else if (moveX > 0) {
+        else if (moveX > 0) 
+        {
             spriteRenderer.sprite = playerRigth;
         }
         else {
             spriteRenderer.sprite = player;
+        }
+
+        // Player damage sprites based on health
+        // Spelar skada sprites baserat på hälsa
+        if (playerHealth == 2)
+        {
+            spriteRenderer.sprite = playerDamage;
+        }
+        else if (playerHealth == 1)
+        {
+            spriteRenderer.sprite = playerDamage2;
         }
 
         // Player laser
@@ -96,8 +115,40 @@ public class playerScript : MonoBehaviour
         }
 
     }
+
+    public void ActivateShild()
+    {
+        shield.SetActive(true);
+    }
+
+    public void DeactivateShild()
+    {
+        shield.SetActive(false);
+    }
+
+    public bool IsShieldActive()
+    {
+        return shield.activeSelf;
+    }
+
+    void speedBoost()
+    {
+        playerSpeed*=2;
+    }
+
+    void DublePoits()
+    {
+        // Duble poits funktion
+    }
+
     public void TakeDamage()
     {
+        if (GetComponent<playerScript>().IsShieldActive())
+        {
+            GetComponent<playerScript>().DeactivateShild();
+            Debug.Log("Shield hit!");
+            return;
+        }
         // Player health
         // Spelar hälsa
         playerHealth--;
@@ -105,7 +156,25 @@ public class playerScript : MonoBehaviour
         Debug.Log("player Health:" + playerHealth);
     }
 
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        powerUps powerUp = collision.GetComponent<powerUps>();
 
-  
-    
+        if (powerUp != null && powerUp.activateshield)
+        {
+            ActivateShild();
+            scoreManager.instance.AddPoits(20);
+            Destroy(collision.gameObject);
+        }
+        if (powerUp != null && powerUp.speedBoost)
+        {
+            speedBoost();
+            scoreManager.instance.AddPoits(20);
+            Destroy(collision.gameObject);
+        }
+    }
+
+
+
+
 }
