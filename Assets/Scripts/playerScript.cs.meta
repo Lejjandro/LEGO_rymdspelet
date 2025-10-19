@@ -1,2 +1,21 @@
 fileFormatVersion: 2
 guid: 4b98cca63c9e28441b85ff443fb52d40
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - laserBullet: {instanceID: 0}
+  - player: {instanceID: 0}
+  - playerRigth: {instanceID: 0}
+  - playerLeft: {instanceID: 0}
+  - playerDamage: {instanceID: 0}
+  - playerDamage2: {instanceID: 0}
+  - playerDamageRigth: {instanceID: 0}
+  - playerDamageRigth2: {instanceID: 0}
+  - playerDamageLeft: {instanceID: 0}
+  - playerDamageLeft2: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

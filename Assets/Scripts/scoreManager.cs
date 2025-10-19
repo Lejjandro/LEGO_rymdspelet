@@ -25,7 +25,10 @@ public class scoreManager : MonoBehaviour
     private float resetHoldTimer = 3f;
     private float resetTimer = 0f;
 
+    // Double points status and timer
+    // Status för dubbel poäng och timer    
     private bool doublePoints;
+    public float dublePointsTimer = 0f;
 
     private void Awake()
     {
@@ -59,12 +62,56 @@ public class scoreManager : MonoBehaviour
         }
     }
 
+    // Activate double points for a specified duration
+    // Aktivera dubbel poäng för en specificerad varaktighet
+    public void ActivateDoublePoints(float duration)
+    {
+        doublePoints = true;
+        dublePointsTimer = duration;
+        Debug.Log("Double Points activated!");
+    }
+
+    private void FixedUpdate()
+    {
+        // Handle double points timer
+        // Hantera timer för dubbel poäng
+        if (doublePoints)
+        {
+            dublePointsTimer -= Time.fixedDeltaTime;
+            if (dublePointsTimer <= 0f)
+            {
+                doublePoints = false;
+                Debug.Log("Double Points deactivated!");
+            }
+        }
+
+        // Update score text color based on double points status
+        // Uppdatera färg på poängtext baserat på status för dubbel poäng
+        if (doublePoints)
+        {
+            scoreText.color = Color.yellow;
+        }
+        else
+        {
+            scoreText.color = Color.white;
+        }
+    }
+
     public void AddPoits(int amount)
     {
+
         // Add points to score
         // Lägg till poäng till poängsumman
         score += amount;
         scoreText.text = "SCORE: " + score.ToString();
+
+        // Double points effect
+        // Dubbel poäng effekt
+        if (doublePoints)
+        {
+            amount *= 2;
+            Debug.Log("Double points active! Points gained: " + amount);
+        }
 
         // Check and update highscore
         // Kontrollera och uppdatera highscore

@@ -20,16 +20,25 @@ public class playerScript : MonoBehaviour
     // Player sprites
     private SpriteRenderer spriteRenderer;
     public Sprite player;
-    public Sprite playerRigth;
+    public Sprite playerRight;
     public Sprite playerLeft;
     public Sprite playerDamage;
     public Sprite playerDamage2;
+    public Sprite playerDamageRight;
+    public Sprite playerDamageRight2;
+    public Sprite playerDamageLeft;
+    public Sprite playerDamageLeft2;
 
     // Player Health
     public int playerHealth = 3;
 
     GameObject shield;
-    
+
+    private bool speedBoostActive = false;
+    private float speedBoostTimer = 0f;
+    public float speedBoostDuration = 5f;
+    private float normalSpeed;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -38,6 +47,8 @@ public class playerScript : MonoBehaviour
 
         transform.position = new Vector3(0f, -4f, 0);
         spriteRenderer = GetComponent<SpriteRenderer>();
+
+        normalSpeed = playerSpeed;
     }
 
     // Update is called once per frame
@@ -70,6 +81,19 @@ public class playerScript : MonoBehaviour
 
         transform.Translate(move * playerSpeed * Time.deltaTime);
 
+        // Speed boost timer
+        // Hastighetsökning timer
+        if (speedBoostActive)
+        {
+            speedBoostTimer -= Time.deltaTime;
+            if (speedBoostTimer <= 0f)
+            {
+                speedBoostActive = false;
+                playerSpeed = normalSpeed;
+                Debug.Log("Speed Boost deactivated!");
+            }
+        }
+
         // Player sprites change based on movement direction
         // Spelar sprites ändras baserat på rörelseriktning
         if (moveX < 0) 
@@ -78,9 +102,10 @@ public class playerScript : MonoBehaviour
         }
         else if (moveX > 0) 
         {
-            spriteRenderer.sprite = playerRigth;
+            spriteRenderer.sprite = playerRight;
         }
-        else {
+        else 
+        {
             spriteRenderer.sprite = player;
         }
 
@@ -93,6 +118,15 @@ public class playerScript : MonoBehaviour
         else if (playerHealth == 1)
         {
             spriteRenderer.sprite = playerDamage2;
+        }
+
+        if (playerHealth == 2 && moveX > 0)
+        {
+            spriteRenderer.sprite = playerDamageRight;
+        }
+        else if (playerHealth == 2 && moveX < 0)
+        {
+            spriteRenderer.sprite = playerDamageLeft;
         }
 
         // Player laser
@@ -116,6 +150,8 @@ public class playerScript : MonoBehaviour
 
     }
 
+    // Shield methods
+    // Sköld metoder
     public void ActivateShild()
     {
         shield.SetActive(true);
@@ -130,19 +166,25 @@ public class playerScript : MonoBehaviour
     {
         return shield.activeSelf;
     }
-
-    void speedBoost()
+    // Speed boost method
+    // Hastighetsökning metod
+    public void ActivateSpeedBoost(float duration)
     {
-        playerSpeed*=2;
+        if (!speedBoostActive)
+        {
+            speedBoostActive = true;
+            playerSpeed += 2;
+        }
+        speedBoostTimer = speedBoostDuration;
+        Debug.Log("Speed Boost activated!");
+
     }
 
-    void DublePoits()
-    {
-        // Duble poits funktion
-    }
 
     public void TakeDamage()
     {
+        // Shield hit detection
+        // Sköld träff detektion
         if (GetComponent<playerScript>().IsShieldActive())
         {
             GetComponent<playerScript>().DeactivateShild();
@@ -156,6 +198,8 @@ public class playerScript : MonoBehaviour
         Debug.Log("player Health:" + playerHealth);
     }
 
+    // Power-up collision detection
+    // Power-up kollision detektion
     private void OnTriggerEnter2D(Collider2D collision)
     {
         powerUps powerUp = collision.GetComponent<powerUps>();
@@ -166,9 +210,17 @@ public class playerScript : MonoBehaviour
             scoreManager.instance.AddPoits(20);
             Destroy(collision.gameObject);
         }
+
         if (powerUp != null && powerUp.speedBoost)
         {
-            speedBoost();
+            ActivateSpeedBoost(speedBoostDuration);
+            scoreManager.instance.AddPoits(20);
+            Destroy(collision.gameObject);
+        }
+
+        if (powerUp != null && powerUp.doublePoints)
+        {
+            scoreManager.instance.ActivateDoublePoints(10f);
             scoreManager.instance.AddPoits(20);
             Destroy(collision.gameObject);
         }
