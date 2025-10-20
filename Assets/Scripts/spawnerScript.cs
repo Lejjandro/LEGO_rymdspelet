@@ -20,6 +20,8 @@ public class spawnScript : MonoBehaviour
     public GameObject asteroider;
     public int asteroidercounter;
 
+    public GameObject powerUpShild;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -40,6 +42,7 @@ public class spawnScript : MonoBehaviour
         // Spawnar fiender
         while (true)
         {
+            
             if (enemyCounter < 3 && GameObject.Find("Player") != null)
             {
                 // Randomly spawns either enemyShip or enemyShip2

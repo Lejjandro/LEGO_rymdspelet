@@ -57,7 +57,6 @@ public class playerScript : MonoBehaviour
         counter++;
         // Player movement
         // Player rörelse
-        // !!!!chat GPT har fixat detta vissa till lärare!!!!
         float moveX = 0f;
         float moveY = 0f;
 
