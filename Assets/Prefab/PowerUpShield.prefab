@@ -12,6 +12,8 @@ GameObject:
   - component: {fileID: 1382066979091527175}
   - component: {fileID: 822055475245846902}
   - component: {fileID: 596955985013498702}
+  - component: {fileID: -1891810442858600290}
+  - component: {fileID: -8767196848074746734}
   m_Layer: 0
   m_Name: PowerUpShield
   m_TagString: Untagged
@@ -150,3 +152,29 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 0.34, y: 0.33}
   m_EdgeRadius: 0
+--- !u!114 &-1891810442858600290
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6631902030945848121}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08e3bfe73a8b56840a960eb04fd32dab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 0
+--- !u!114 &-8767196848074746734
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6631902030945848121}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08e3bfe73a8b56840a960eb04fd32dab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 1

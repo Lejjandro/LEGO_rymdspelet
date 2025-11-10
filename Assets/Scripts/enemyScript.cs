@@ -1,11 +1,10 @@
 using System.Collections;
-using System.Collections.Generic;
-using System.Security.Cryptography;
 using Unity.VisualScripting;
 using UnityEngine;
 
 public class enemyScript : MonoBehaviour
 {
+
     public float speed;
 
     public int roll;
@@ -31,8 +30,12 @@ public class enemyScript : MonoBehaviour
     {
         while (true)
         {
-            int rull;
-            rull = Random.InitState(-1, 2);
+            int rull = 0;
+            while (rull == 0)
+            {
+                rull = Random.Range(-1, 2);
+            }
+
             movement.x = rull;
             movement.y = -1;
             yield return new WaitForSeconds(1);
@@ -46,7 +49,7 @@ public class enemyScript : MonoBehaviour
         {
             other.transform.GetComponent<playerScript>().TakeDamage();
             Debug.Log("hit:" + other);
-         
+
         }
 
         // If enemy get hit by the laser bullet it gets destroyed.
@@ -65,21 +68,24 @@ public class enemyScript : MonoBehaviour
     }
     private void On_Destroy()
     {
-        roll = Random.Range(0, 2);
-        if (roll <= 0)
+        roll = Random.Range(0, 101);
+        if (roll <= 35)
         {
-            roll = Random.Range(0, 101);
-            if (roll <= 33)
+
+            roll = Random.Range(0, 4);
+            if (roll == 1)
             {
-                //Instantiate()
+                Instantiate(PowerUp1, this.transform.position, this.transform.rotation);
                 GameObject.Find("PowerUpShild");
             }
-            else if (roll <= 66)
+            else if (roll == 2)
             {
+                Instantiate(PowerUp2, this.transform.position, this.transform.rotation);
                 GameObject.Find("PowerUpSpeedBoost");
             }
-            else if (roll <= 100)
+            else if (roll == 3)
             {
+                Instantiate(PowerUp3, this.transform.position, this.transform.rotation);
                 GameObject.Find("PowerUp2xPoints");
             }
         }
