@@ -1,6 +1,7 @@
 using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
+using static UnityEditor.Experimental.AssetDatabaseExperimental.AssetDatabaseCounters;
 
 public class enemyScript : MonoBehaviour
 {
@@ -12,7 +13,14 @@ public class enemyScript : MonoBehaviour
     public GameObject PowerUp2;
     public GameObject PowerUp3;
 
+    public GameObject laserBulletEnemy;
+
     private Vector3 movement = Vector3.zero;
+
+    public float bulletTimer = 5;
+
+    public int CD = 2;
+    private bool canShoot = true;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -23,6 +31,39 @@ public class enemyScript : MonoBehaviour
     void Update()
     {
         transform.Translate(movement.normalized * speed * Time.deltaTime);
+
+        bulletTimer += Time.deltaTime;
+        if (bulletTimer > 0 && canShoot == true)
+        {
+            // Instantiate laser bullet
+            // Instansiera laser bullet
+            Instantiate(laserBulletEnemy, this.transform.position + new Vector3(0, -0.7f, 0), this.transform.rotation);
+            canShoot = false;
+            bulletTimer = 0;
+        }
+        if (bulletTimer > CD)
+        {
+            bulletTimer = 0;
+            canShoot = true;
+        }
+
+        // Enemy movement
+        // Fiende rörelse
+        if (transform.position.y <= -5.5f)
+        {
+            transform.position = new Vector3(Random.Range(-8, 8), 5.5f, 0);
+        }
+
+        // Screen wrap
+        // Skärm omslag
+        if (transform.position.x > 12.5f)
+        {
+            transform.position = new Vector3(-12.5f, transform.position.y, transform.position.z);
+        }
+        if (transform.position.x < -12.5f)
+        {
+            transform.position = new Vector3(12.5f, transform.position.y, transform.position.z);
+        }
     }
     // Enemy movement
     // Fiende rörelse

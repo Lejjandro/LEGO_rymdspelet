@@ -53,7 +53,7 @@ public class asteroiderScript : MonoBehaviour
     }
     private void On_Destroy()
     {
-        roll = Random.Range(0, 101);
+        roll = Random.Range(0, 1);
         if (roll <= 35)
         {
 

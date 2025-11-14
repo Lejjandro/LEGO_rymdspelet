@@ -28,6 +28,7 @@ public class playerScript : MonoBehaviour
     public Sprite playerDamageRight2;
     public Sprite playerDamageLeft;
     public Sprite playerDamageLeft2;
+    private int tobbe;
 
     // Player Health
     public int playerHealth = 3;
@@ -68,14 +69,19 @@ public class playerScript : MonoBehaviour
         {
             moveX = -1f;
         }
-        if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))
+        if (Input.GetKey(KeyCode.W) && (this.transform.position.y < 4.5f) || Input.GetKey(KeyCode.UpArrow) && (this.transform.position.y < 4.5f))
         {
             moveY = 1f;
         }
-        else if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))
+        else if (Input.GetKey(KeyCode.S) && (this.transform.position.y > -4.5f) || Input.GetKey(KeyCode.DownArrow) && (this.transform.position.y > -4.5f))
         {
             moveY = -1f;
         }
+        if( (tobbe > 9 && tobbe < 0) || (tobbe == 2 && tobbe < 0))
+        {
+
+        }
+
         Vector3 move = new Vector3(moveX, moveY, 0f).normalized;
 
         transform.Translate(move * playerSpeed * Time.deltaTime);
@@ -147,6 +153,16 @@ public class playerScript : MonoBehaviour
             canShoot = true;
         }
 
+        // Screen wrap
+        // Skärm omslag
+        if (transform.position.x > 12.5f)
+        {
+            transform.position = new Vector3(-12.5f, transform.position.y, transform.position.z);
+        }
+        if (transform.position.x < -12.5f)
+        {
+            transform.position = new Vector3(12.5f, transform.position.y, transform.position.z);
+        }
     }
 
     // Shield methods
@@ -224,8 +240,4 @@ public class playerScript : MonoBehaviour
             Destroy(collision.gameObject);
         }
     }
-
-
-
-
 }
