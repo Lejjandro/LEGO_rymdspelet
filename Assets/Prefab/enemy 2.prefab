@@ -181,3 +181,6 @@ MonoBehaviour:
   PowerUp1: {fileID: 6631902030945848121, guid: 5065917be741a94439ed2508ac6aa283, type: 3}
   PowerUp2: {fileID: 8735888751396851124, guid: 656dcf7877935b24f9e4f026887ce653, type: 3}
   PowerUp3: {fileID: 6846481278280810831, guid: 9964858060b5cfc4eabe9728e799816a, type: 3}
+  laserBulletEnemy: {fileID: 6282496407869043773, guid: 8595da1823ad8a44cbc79bd56feb5fa7, type: 3}
+  bulletTimer: 5
+  bulletCoolDown: 2

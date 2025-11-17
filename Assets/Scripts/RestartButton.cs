@@ -1,8 +1,8 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
-public class scrollingBackground : MonoBehaviour
+public class RestartButton : MonoBehaviour
 {
-  
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -12,6 +12,10 @@ public class scrollingBackground : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-      
+        
+    }
+    public void Restargame()
+    {
+        SceneManager.LoadScene(1);
     }
 }

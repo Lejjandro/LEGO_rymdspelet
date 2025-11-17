@@ -13,6 +13,11 @@ public class enemy_2_Script : MonoBehaviour
     public GameObject PowerUp1;
     public GameObject PowerUp2;
     public GameObject PowerUp3;
+
+    public GameObject laserBulletEnemy;
+    public float bulletTimer = 5;
+    public int bulletCoolDown = 2;
+    private bool canShoot = true;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -28,6 +33,21 @@ public class enemy_2_Script : MonoBehaviour
         if (transform.position.y <= -5.5f)
         {
             transform.position = new Vector3(Random.Range(-8, 8), 5.5f, 0);
+        }
+
+        bulletTimer += Time.deltaTime;
+        if (bulletTimer > 0 && canShoot == true)
+        {
+            // Instantiate laser bullet
+            // Instansiera laser bullet
+            Instantiate(laserBulletEnemy, this.transform.position + new Vector3(0, -0.7f, 0), this.transform.rotation);
+            canShoot = false;
+            bulletTimer = 0;
+        }
+        if (bulletTimer > bulletCoolDown)
+        {
+            bulletTimer = 0;
+            canShoot = true;
         }
 
         // If enemy health is less than 1 it gets destroyed and player get points.
@@ -64,10 +84,11 @@ public class enemy_2_Script : MonoBehaviour
     }
     private void On_Destroy()
     {
-        roll = Random.Range(0, 1);
+        //Power-up spawn chance and type
+        // Power-up spawn chans och typ
+        roll = Random.Range(0, 101);
         if (roll <= 35)
         {
-
             roll = Random.Range(0, 4);
             if (roll == 1)
             {

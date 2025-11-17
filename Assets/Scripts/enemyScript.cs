@@ -18,8 +18,7 @@ public class enemyScript : MonoBehaviour
     private Vector3 movement = Vector3.zero;
 
     public float bulletTimer = 5;
-
-    public int CD = 2;
+    public int bulletCoolDown = 2;
     private bool canShoot = true;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -41,7 +40,7 @@ public class enemyScript : MonoBehaviour
             canShoot = false;
             bulletTimer = 0;
         }
-        if (bulletTimer > CD)
+        if (bulletTimer > bulletCoolDown)
         {
             bulletTimer = 0;
             canShoot = true;

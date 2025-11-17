@@ -28,7 +28,6 @@ public class playerScript : MonoBehaviour
     public Sprite playerDamageRight2;
     public Sprite playerDamageLeft;
     public Sprite playerDamageLeft2;
-    private int tobbe;
 
     // Player Health
     public int playerHealth = 3;
@@ -77,11 +76,6 @@ public class playerScript : MonoBehaviour
         {
             moveY = -1f;
         }
-        if( (tobbe > 9 && tobbe < 0) || (tobbe == 2 && tobbe < 0))
-        {
-
-        }
-
         Vector3 move = new Vector3(moveX, moveY, 0f).normalized;
 
         transform.Translate(move * playerSpeed * Time.deltaTime);
@@ -195,7 +189,6 @@ public class playerScript : MonoBehaviour
 
     }
 
-
     public void TakeDamage()
     {
         // Shield hit detection
@@ -217,6 +210,17 @@ public class playerScript : MonoBehaviour
     // Power-up kollision detektion
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        // If player is hit by enemy laser bullet it takes damage.
+        // Om spelaren träffas av fiende laser bullet tar den skada.
+        if (collision.tag == "laserBulletEnemy")
+        {
+            TakeDamage();
+            Destroy(collision.gameObject);
+            Debug.Log("hit:" + collision);
+        }
+        
+        // Power-up detection
+        // Power-up detektion
         powerUps powerUp = collision.GetComponent<powerUps>();
 
         if (powerUp != null && powerUp.activateshield)
