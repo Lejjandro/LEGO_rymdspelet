@@ -43,7 +43,10 @@ public class scoreManager : MonoBehaviour
         // Load highscore from PlayerPrefs
         // Ladda highscore från PlayerPrefs
         highScore = PlayerPrefs.GetInt("highscore", 0);
+        if (scoreText != null)
+        {
         scoreText.text = "SCORE: " + score.ToString();
+        }
         highscoreText.text = "HIGHSCORE: " + highScore.ToString();
     }
 
@@ -87,13 +90,17 @@ public class scoreManager : MonoBehaviour
 
         // Update score text color based on double points status
         // Uppdatera färg på poängtext baserat på status för dubbel poäng
-        if (doublePoints)
+        if (scoreText != null)
         {
-            scoreText.color = Color.yellow;
-        }
-        else
-        {
-            scoreText.color = Color.white;
+            if (doublePoints)
+            {
+                scoreText.color = Color.yellow;
+            }
+            else
+            {
+                scoreText.color = Color.white;
+            }
+
         }
     }
 

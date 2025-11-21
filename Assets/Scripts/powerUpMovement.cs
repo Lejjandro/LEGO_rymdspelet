@@ -16,6 +16,11 @@ public class powerUpMovement : MonoBehaviour
     void Update()
     {
         transform.Translate(movement.normalized * speed * Time.deltaTime);
+
+        if (transform.position.y <= -5.5f)
+        {
+            transform.position = new Vector3(Random.Range(-8, 8), 5.5f, 0);
+        }
     }
     IEnumerator powerUp_Movement()
     {

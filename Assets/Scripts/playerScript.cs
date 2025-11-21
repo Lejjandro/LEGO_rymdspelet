@@ -141,7 +141,7 @@ public class playerScript : MonoBehaviour
             canShoot = false;
             counter = 0;
         }
-        if (counter > 200)
+        if (counter > 150)
         {
             counter = 0;
             canShoot = true;

@@ -1,8 +1,11 @@
 using UnityEditor.Experimental.GraphView;
+using UnityEditor.Rendering;
 using UnityEngine;
 
 public class playerLifes : MonoBehaviour
 {
+    public gameManagerScript gameManager;
+
     public int life;
     public GameObject[] Lifes;
     // Update is called once per frame
@@ -13,6 +16,7 @@ public class playerLifes : MonoBehaviour
         if (life < 1)
         {
             Destroy(Lifes[0].gameObject);
+            gameManager.GameOver();
             Destroy(gameObject);
         }
         else if (life < 2)
